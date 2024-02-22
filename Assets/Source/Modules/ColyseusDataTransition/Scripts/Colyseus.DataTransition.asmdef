@@ -1,0 +1,16 @@
+{
+    "name": "Colyseus.DataTransition",
+    "rootNamespace": "Colyseus.DataTransition",
+    "references": [
+        "GUID:1ae62e75a2116dc45b6ab1dc1a39382b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

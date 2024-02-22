@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx watch src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "export": "npx schema-codegen src/rooms/GameRoom.ts --csharp --output C:/UnityProjects/CrossPlatformModule/Assets/Source/Modules/Generated"
   },
   "engines": {
     "node": ">=16.x"

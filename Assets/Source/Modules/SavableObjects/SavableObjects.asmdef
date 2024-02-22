@@ -1,0 +1,18 @@
+{
+    "name": "SavableObjects",
+    "rootNamespace": "SavableObjects",
+    "references": [
+        "GUID:1ae62e75a2116dc45b6ab1dc1a39382b",
+        "GUID:8dfd19ffc2c0c8e4aa88d5df3ecf2642",
+        "GUID:7d8788162c0190c4c8b801543ada1607"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

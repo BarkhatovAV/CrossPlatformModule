@@ -1,0 +1,18 @@
+{
+    "name": "Multiplayer",
+    "rootNamespace": "Multiplayer",
+    "references": [
+        "GUID:1ae62e75a2116dc45b6ab1dc1a39382b",
+        "GUID:7d8788162c0190c4c8b801543ada1607",
+        "GUID:5c2c113f0b45c274e9e1340c8eae3ebd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
