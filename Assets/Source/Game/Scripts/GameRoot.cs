@@ -1,5 +1,6 @@
 using Colyseus.UI;
 using Multiplayer;
+using Synchronization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ namespace Game
         [SerializeField] private MultiplayerManager _multiplayerManager;
 
         private PlayerSettings _playerSettings;
+        private SceneSynchronizator _sceneSynchronizator;
 
         private void Awake()
         {
@@ -42,6 +44,9 @@ namespace Game
         private void PrepareGameScene()
         {
             _multiplayerManager.FindGame(_playerSettings.Login);
+            _sceneSynchronizator = FindAnyObjectByType<SceneSynchronizator>();
+
+            _sceneSynchronizator.SetMultiplayerManager(_multiplayerManager);
             //if (_joinInfo.IsIdJoining)
             //    _multiplayerManager.FindGame(_playerSettings.Login, _joinInfo.JoinId);
             //else

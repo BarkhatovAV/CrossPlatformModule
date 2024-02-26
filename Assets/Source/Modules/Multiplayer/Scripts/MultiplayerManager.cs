@@ -10,7 +10,8 @@ namespace Multiplayer
     {
         private ColyseusRoom<State> _room;
 
-        public event Action<string> ObjectSynchronized;
+        public event Action<string> SceneSynchronized;
+        public event Action<string> Test;
         public event Action<string> RoomFound;
 
         public string ClientID => _room == null ? "" : _room.SessionId;
@@ -73,7 +74,8 @@ namespace Multiplayer
 
         private void SubscribeMessages()
         {
-            _room.OnMessage<string>(MessagesNames.Synchronize, jsonSynchronizeData => ObjectSynchronized?.Invoke(jsonSynchronizeData));
+            _room.OnMessage<string>(MessagesNames.Synchronize, jsonSynchronizeData => SceneSynchronized?.Invoke(jsonSynchronizeData));
+            _room.OnMessage<string>(MessagesNames.Test, jsonTestData => Test?.Invoke(jsonTestData));
             //_room.OnMessage<string>(MessagesNames.Capture, jsonCutDownData => CutDowned?.Invoke(jsonCutDownData));
 
             //_room.OnJoin += OnRoomJoined;

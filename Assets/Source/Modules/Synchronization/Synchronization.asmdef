@@ -1,10 +1,11 @@
 {
-    "name": "SavableObjects",
-    "rootNamespace": "SavableObjects",
+    "name": "Synchronization",
+    "rootNamespace": "Synchronization",
     "references": [
         "GUID:1ae62e75a2116dc45b6ab1dc1a39382b",
         "GUID:8dfd19ffc2c0c8e4aa88d5df3ecf2642",
-        "GUID:7d8788162c0190c4c8b801543ada1607"
+        "GUID:7d8788162c0190c4c8b801543ada1607",
+        "GUID:1e1c5716cb19b5e40871b7932274e070"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

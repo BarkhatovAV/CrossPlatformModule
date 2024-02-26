@@ -49,22 +49,23 @@ export class StateHandlerRoom extends Room<State> {
         this.onMessage("synchronize", (client, data) => {
             this.broadcast("synchronize", JSON.stringify)({
                 sessionID: client.sessionId,
-                prefabVariant : data.PrefabVariant,
-                currentPosition : data.CurrentPosition,
-                currentAngular : data.CurrentAngular,
-                currentVelocity : data.CurrentVelocity,
-                currentAngularVelocity : data.CurrentAngularVelocity,
-                key : data.Key,
+                prefabVariants : data.prefabVariants,
+                positions : data.positions,
+                angulars : data.angulars,
+                velocities : data.velocities,
+                angularVelocities : data.angularVelocities
+            }), {except: client}
+        });
+
+        this.onMessage("test", (client, data) => {
+            this.broadcast("test", JSON.stringify)({
+                sessionID: client.sessionId,
+                testIndex : data.testIndes
             }), {except: client}
         });
     }
 
-    // onAuth(client, options, req) {
-    //     return true;
-    // }
-
     onJoin (client: Client) {
-        //client.send("hello", "world");
         console.log(client.sessionId, "joined!");
         this.state.createPlayer(client.sessionId);
     }
@@ -77,5 +78,4 @@ export class StateHandlerRoom extends Room<State> {
     onDispose () {
         console.log("Dispose StateHandlerRoom");
     }
-
 }
