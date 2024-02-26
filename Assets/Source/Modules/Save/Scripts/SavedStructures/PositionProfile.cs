@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Save
 {
@@ -7,9 +6,12 @@ namespace Save
     public struct PositionProfile
     {
         public PrefabsVariants PrefabVariant;
-        public Vector2 CurrentPosition;
-        public Vector2 CurrentAngular;
-        public Vector2 CurrentVelocity;
+        public float CurrentXPosition;
+        public float CurrentYPosition;
+        public float CurrentXAngular;
+        public float CurrentYAngular;
+        public float CurrentXVelocity;
+        public float CurrentYVelocity;
         public float CurrentAngularVelocity;
     }
 }

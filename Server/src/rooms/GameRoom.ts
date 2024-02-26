@@ -33,11 +33,9 @@ export class StateHandlerRoom extends Room<State> {
         this.setState(new State());
 
         this.onMessage("synchronize", (client, data) => {
-            this.broadcast("synchronize", JSON.stringify)({
-                sessionID: client.sessionId,
-                profiles: data.profiles
-            }), {except: client}
-        });
+            console.log(data);
+            this.broadcast("synchronize", data), {except: client}
+        }); 
     }
 
     onJoin (client: Client) {

@@ -21,9 +21,12 @@ namespace Synchronization
 
         public PositionProfile GetCurrentPositionProfile()
         {
-            _positionProfile.CurrentPosition = _transform.position;
-            _positionProfile.CurrentAngular = _transform.eulerAngles;
-            _positionProfile.CurrentVelocity = _rigidbody2D.velocity;
+            _positionProfile.CurrentXPosition = _transform.position.x;
+            _positionProfile.CurrentYPosition = _transform.position.y;
+            _positionProfile.CurrentXAngular = _transform.eulerAngles.x;
+            _positionProfile.CurrentYAngular = _transform.eulerAngles.y;
+            _positionProfile.CurrentXVelocity = _rigidbody2D.velocity.x;
+            _positionProfile.CurrentYVelocity = _rigidbody2D.velocity.y;
             _positionProfile.CurrentAngularVelocity = _rigidbody2D.angularVelocity;
 
             return _positionProfile;
@@ -32,9 +35,21 @@ namespace Synchronization
         private void SetCurrentPosition(PositionProfile positionProfile)
         {
             _positionProfile.PrefabVariant = positionProfile.PrefabVariant;
-            _transform.position = positionProfile.CurrentPosition;
-            _transform.eulerAngles = positionProfile.CurrentAngular;
-            _rigidbody2D.velocity = positionProfile.CurrentVelocity;
+
+            Vector2 tempVector;
+
+            tempVector.x = positionProfile.CurrentXPosition;
+            tempVector.y = positionProfile.CurrentYPosition;
+            _transform.position = tempVector;
+
+            tempVector.x = positionProfile.CurrentXAngular;
+            tempVector.y = positionProfile.CurrentYAngular;
+            _transform.eulerAngles = tempVector;
+
+            tempVector.x = positionProfile.CurrentXVelocity;
+            tempVector.y = positionProfile.CurrentYVelocity;
+            _rigidbody2D.velocity = tempVector;
+
             _rigidbody2D.angularVelocity = positionProfile.CurrentAngularVelocity;
         }
     }

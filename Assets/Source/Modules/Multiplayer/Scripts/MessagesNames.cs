@@ -13,7 +13,7 @@ namespace Multiplayer
         private const string InvalidDataErrorText = "Error: Invalid message data. Check that the data type of the data being sent is correct.";
 
         private static Dictionary<string, object> MessagesDataExamples = new Dictionary<string, object>()
-        {   { Synchronize, new SceneConfig() },
+        {   { Synchronize, "string" },
             { Login, "string" }
         };
 

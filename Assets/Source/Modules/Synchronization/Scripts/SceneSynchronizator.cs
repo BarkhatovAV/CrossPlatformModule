@@ -32,8 +32,11 @@ namespace Synchronization
         public void SaveSceneConfig() =>
             Saver.Save(PlayerPrefsNames.SceneConfig, _sceneConfig);
 
-        public void SendSceneConfig() =>
-            _multiplayerManager.TrySendMessage(MessagesNames.Synchronize, _sceneConfig);
+        public void SendSceneConfig()
+        {
+            _multiplayerManager.TrySendMessage(MessagesNames.Synchronize, JsonUtility.ToJson(_sceneConfig));
+            Debug.Log(JsonUtility.ToJson(_sceneConfig));
+        }
 
         public void SetNewCircle() =>
             SetNewObject(PrefabsVariants.Circle);
@@ -49,6 +52,7 @@ namespace Synchronization
 
         private void SynchronizeScene(string jsonSceneConfig)
         {
+            Debug.Log(jsonSceneConfig);
             _sceneConfig = Saver.Unpack<SceneConfig>(jsonSceneConfig);
 
             SetObjects();
@@ -120,9 +124,12 @@ namespace Synchronization
             PositionProfile positionProfile = new PositionProfile();
 
             positionProfile.PrefabVariant = prefabVariant;
-            positionProfile.CurrentPosition = Vector2.zero;
-            positionProfile.CurrentAngular = Vector2.zero;
-            positionProfile.CurrentVelocity = Vector2.zero;
+            positionProfile.CurrentXPosition = 0f;
+            positionProfile.CurrentYPosition = 0f;
+            positionProfile.CurrentXAngular = 0f;
+            positionProfile.CurrentYAngular = 0f;
+            positionProfile.CurrentXVelocity = 0f;
+            positionProfile.CurrentYVelocity = 0f;
             positionProfile.CurrentAngularVelocity = 0f;
 
             _sceneConfig.profiles.Add(positionProfile);
