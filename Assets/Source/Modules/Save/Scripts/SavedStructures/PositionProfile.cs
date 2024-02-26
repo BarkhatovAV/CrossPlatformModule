@@ -6,8 +6,7 @@ namespace Save
     [Serializable]
     public struct PositionProfile
     {
-        //public PrefabsVariants PrefabVariant;
-        public int PrefabVariant;
+        public PrefabsVariants PrefabVariant;
         public Vector2 CurrentPosition;
         public Vector2 CurrentAngular;
         public Vector2 CurrentVelocity;

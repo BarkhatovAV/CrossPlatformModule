@@ -1,8 +1,6 @@
+using Colyseus;
 using System;
 using System.Collections.Generic;
-using Colyseus;
-using Colyseus.Schema;
-using UnityEngine;
 
 namespace Multiplayer
 {
@@ -11,7 +9,6 @@ namespace Multiplayer
         private ColyseusRoom<State> _room;
 
         public event Action<string> SceneSynchronized;
-        public event Action<string> Test;
         public event Action<string> RoomFound;
 
         public string ClientID => _room == null ? "" : _room.SessionId;
@@ -70,19 +67,17 @@ namespace Multiplayer
             RoomFound?.Invoke(RoomId);
 
             SubscribeMessages();
-        } 
+        }
 
         private void SubscribeMessages()
         {
             _room.OnMessage<string>(MessagesNames.Synchronize, jsonSynchronizeData => SceneSynchronized?.Invoke(jsonSynchronizeData));
-            _room.OnMessage<string>(MessagesNames.Test, jsonTestData => Test?.Invoke(jsonTestData));
-            //_room.OnMessage<string>(MessagesNames.Capture, jsonCutDownData => CutDowned?.Invoke(jsonCutDownData));
 
             //_room.OnJoin += OnRoomJoined;
             _room.OnStateChange += OnStateChanged;
         }
 
-        private void OnStateChanged(State state, bool isFirstState) 
+        private void OnStateChanged(State state, bool isFirstState)
         {
         }
     }
