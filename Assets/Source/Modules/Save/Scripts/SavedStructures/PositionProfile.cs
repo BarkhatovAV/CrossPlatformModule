@@ -6,12 +6,12 @@ namespace Save
     public struct PositionProfile
     {
         public PrefabsVariants PrefabVariant;
-        public float CurrentXPosition;
-        public float CurrentYPosition;
-        public float CurrentXAngular;
-        public float CurrentYAngular;
-        public float CurrentXVelocity;
-        public float CurrentYVelocity;
-        public float CurrentAngularVelocity;
+        public float xPos;
+        public float yPos;
+        public float xAng;
+        public float yAng;
+        public float xVel;
+        public float yVel;
+        public float AngVel;
     }
 }

@@ -73,7 +73,6 @@ namespace Multiplayer
         {
             _room.OnMessage<string>(MessagesNames.Synchronize, jsonSynchronizeData => SceneSynchronized?.Invoke(jsonSynchronizeData));
 
-            //_room.OnJoin += OnRoomJoined;
             _room.OnStateChange += OnStateChanged;
         }
 

@@ -21,13 +21,13 @@ namespace Synchronization
 
         public PositionProfile GetCurrentPositionProfile()
         {
-            _positionProfile.CurrentXPosition = _transform.position.x;
-            _positionProfile.CurrentYPosition = _transform.position.y;
-            _positionProfile.CurrentXAngular = _transform.eulerAngles.x;
-            _positionProfile.CurrentYAngular = _transform.eulerAngles.y;
-            _positionProfile.CurrentXVelocity = _rigidbody2D.velocity.x;
-            _positionProfile.CurrentYVelocity = _rigidbody2D.velocity.y;
-            _positionProfile.CurrentAngularVelocity = _rigidbody2D.angularVelocity;
+            _positionProfile.xPos = _transform.position.x;
+            _positionProfile.yPos = _transform.position.y;
+            _positionProfile.xAng = _transform.eulerAngles.x;
+            _positionProfile.yAng = _transform.eulerAngles.y;
+            _positionProfile.xVel = _rigidbody2D.velocity.x;
+            _positionProfile.yVel = _rigidbody2D.velocity.y;
+            _positionProfile.AngVel = _rigidbody2D.angularVelocity;
 
             return _positionProfile;
         }
@@ -38,19 +38,19 @@ namespace Synchronization
 
             Vector2 tempVector;
 
-            tempVector.x = positionProfile.CurrentXPosition;
-            tempVector.y = positionProfile.CurrentYPosition;
+            tempVector.x = positionProfile.xPos;
+            tempVector.y = positionProfile.yPos;
             _transform.position = tempVector;
 
-            tempVector.x = positionProfile.CurrentXAngular;
-            tempVector.y = positionProfile.CurrentYAngular;
+            tempVector.x = positionProfile.xAng;
+            tempVector.y = positionProfile.yAng;
             _transform.eulerAngles = tempVector;
 
-            tempVector.x = positionProfile.CurrentXVelocity;
-            tempVector.y = positionProfile.CurrentYVelocity;
+            tempVector.x = positionProfile.xVel;
+            tempVector.y = positionProfile.yVel;
             _rigidbody2D.velocity = tempVector;
 
-            _rigidbody2D.angularVelocity = positionProfile.CurrentAngularVelocity;
+            _rigidbody2D.angularVelocity = positionProfile.AngVel;
         }
     }
 }

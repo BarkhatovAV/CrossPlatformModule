@@ -13,8 +13,6 @@ export class State extends Schema {
     @type({ map: Player })
     players = new MapSchema<Player>();
 
-    something = "This attribute won't be sent to the client-side";
-
     createPlayer(sessionId: string) {
         this.players.set(sessionId, new Player());
     }
@@ -25,7 +23,7 @@ export class State extends Schema {
 }
 
 export class StateHandlerRoom extends Room<State> {
-    maxClients = 2;
+    maxClientsCount = 2;
 
     onCreate (options) {
         console.log("StateHandlerRoom created!", options);
@@ -33,9 +31,8 @@ export class StateHandlerRoom extends Room<State> {
         this.setState(new State());
 
         this.onMessage("synchronize", (client, data) => {
-            console.log(data);
-            this.broadcast("synchronize", data), {except: client}
-        }); 
+            this.broadcast("synchronize", data, { except: client });
+        });
     }
 
     onJoin (client: Client) {

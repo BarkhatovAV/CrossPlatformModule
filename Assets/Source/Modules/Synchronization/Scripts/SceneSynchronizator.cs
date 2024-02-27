@@ -11,6 +11,7 @@ namespace Synchronization
         [SerializeField] private GameObject _squarePrefab;
         [SerializeField] private GameObject _circlePrefab;
 
+        private List<SynchronizableObject> _synchronizableObjects = new List<SynchronizableObject>();
         private MultiplayerManager _multiplayerManager;
         private SceneConfig _sceneConfig;
 
@@ -29,14 +30,14 @@ namespace Synchronization
             _multiplayerManager.SceneSynchronized += SynchronizeScene;
         }
 
-        public void SaveSceneConfig() =>
-            Saver.Save(PlayerPrefsNames.SceneConfig, _sceneConfig);
-
-        public void SendSceneConfig()
+        public void SaveSceneConfig()
         {
-            _multiplayerManager.TrySendMessage(MessagesNames.Synchronize, JsonUtility.ToJson(_sceneConfig));
-            Debug.Log(JsonUtility.ToJson(_sceneConfig));
+            UpdateInfo();
+            Saver.Save(PlayerPrefsNames.SceneConfig, _sceneConfig);
         }
+
+        public void SendSceneConfig() =>
+            _multiplayerManager.TrySendMessage(MessagesNames.Synchronize, JsonUtility.ToJson(_sceneConfig));
 
         public void SetNewCircle() =>
             SetNewObject(PrefabsVariants.Circle);
@@ -47,20 +48,28 @@ namespace Synchronization
         private void SynchronizeScene()
         {
             _sceneConfig = Saver.Load<SceneConfig>(PlayerPrefsNames.SceneConfig);
-            SetObjects();
+            SetObjects(_sceneConfig);
         }
 
         private void SynchronizeScene(string jsonSceneConfig)
         {
-            Debug.Log(jsonSceneConfig);
-            _sceneConfig = Saver.Unpack<SceneConfig>(jsonSceneConfig);
+            ClearScene();
 
-            SetObjects();
+            _sceneConfig = Saver.Unpack<SceneConfig>(jsonSceneConfig);
+            SetObjects(_sceneConfig);
         }
 
-        private void SetObjects()
+        private void ClearScene()
         {
-            List<PositionProfile> positionProfiles = _sceneConfig.profiles;
+            for (int i = 0; i < _synchronizableObjects.Count; i++)
+                Destroy(_synchronizableObjects[i].gameObject);
+
+            _synchronizableObjects.Clear();
+        }
+
+        private void SetObjects(SceneConfig sceneConfig)
+        {
+            List<PositionProfile> positionProfiles = sceneConfig.profiles;
 
             for (int i = 0; i < positionProfiles.Count; i++)
                 SetGettingObject(positionProfiles[i]);
@@ -85,10 +94,13 @@ namespace Synchronization
 
             if (prefab != null)
             {
-                Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                GameObject figure = Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
-                if (prefab.TryGetComponent<SynchronizableObject>(out SynchronizableObject synchronizableObject))
+                if (figure.TryGetComponent<SynchronizableObject>(out SynchronizableObject synchronizableObject))
+                {
                     synchronizableObject.Construct(positionProfile);
+                    _synchronizableObjects.Add(synchronizableObject);
+                }
             }
         }
 
@@ -112,10 +124,13 @@ namespace Synchronization
             if (prefab != null)
             {
                 PositionProfile positionProfile = CreatePositionProfile(prefabVariant);
-                Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                GameObject figure = Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
-                if (prefab.TryGetComponent<SynchronizableObject>(out SynchronizableObject synchronizableObject))
+                if (figure.TryGetComponent<SynchronizableObject>(out SynchronizableObject synchronizableObject))
+                {
                     synchronizableObject.Construct(positionProfile);
+                    _synchronizableObjects.Add(synchronizableObject);
+                }
             }
         }
 
@@ -124,17 +139,30 @@ namespace Synchronization
             PositionProfile positionProfile = new PositionProfile();
 
             positionProfile.PrefabVariant = prefabVariant;
-            positionProfile.CurrentXPosition = 0f;
-            positionProfile.CurrentYPosition = 0f;
-            positionProfile.CurrentXAngular = 0f;
-            positionProfile.CurrentYAngular = 0f;
-            positionProfile.CurrentXVelocity = 0f;
-            positionProfile.CurrentYVelocity = 0f;
-            positionProfile.CurrentAngularVelocity = 0f;
+            positionProfile.xPos = 0f;
+            positionProfile.yPos = 0f;
+            positionProfile.xAng = 0f;
+            positionProfile.yAng = 0f;
+            positionProfile.xVel = 0f;
+            positionProfile.yVel = 0f;
+            positionProfile.AngVel = 0f;
 
             _sceneConfig.profiles.Add(positionProfile);
 
             return positionProfile;
+        }
+
+        private void UpdateInfo()
+        {
+            _sceneConfig.profiles.Clear();
+
+            PositionProfile positionProfile;
+
+            for (int i = 0; i < _synchronizableObjects.Count; i++)
+            {
+                positionProfile = _synchronizableObjects[i].GetCurrentPositionProfile();
+                _sceneConfig.profiles.Add(positionProfile);
+            }
         }
     }
 }
